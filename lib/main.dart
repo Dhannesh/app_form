@@ -46,11 +46,14 @@ class _TextInputWidgetState extends State<TextInputWidget> {
               hintText: "What's on your mind?"),
           keyboardType: TextInputType.text,
           maxLength: 25,
-          onChanged: (text){
+          onSubmitted: (text){
             setState(() {
               thoughts = text;
             });
-            debugPrint('Your thoughts: $thoughts');
+            debugPrint('You submitted your thoughts: $thoughts');
+          },
+          onChanged: (text){
+            debugPrint('Your thoughts: $text');
           },
         ),
         Center(
