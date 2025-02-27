@@ -41,8 +41,11 @@ class _TextInputWidgetState extends State<TextInputWidget> {
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.message),
             border: OutlineInputBorder(),
-            labelText: "Share your thoughts: "
+            labelText: "Share your thoughts: ",
+            hintText: "What's on your mind?"
           ),
+          keyboardType: TextInputType.text,
+          maxLength: 25,
         ),
       ),
     );
