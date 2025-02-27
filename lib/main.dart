@@ -32,24 +32,38 @@ class TextInputWidget extends StatefulWidget {
 }
 
 class _TextInputWidgetState extends State<TextInputWidget> {
+  String thoughts = "No thoughts yet...";
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-        padding: EdgeInsets.all(18),
-      child: Center(
-        child: TextField(
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.message),
-            border: OutlineInputBorder(),
-            labelText: "Share your thoughts: ",
-            hintText: "What's on your mind?"
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(children: <Widget>[
+        TextField(
+          decoration: const InputDecoration(
+              prefixIcon: Icon(Icons.message),
+              border: OutlineInputBorder(),
+              labelText: "Share your thoughts: ",
+              hintText: "What's on your mind?"),
           keyboardType: TextInputType.text,
           maxLength: 25,
+          onChanged: (text){
+            setState(() {
+              thoughts = text;
+            });
+            debugPrint('Your thoughts: $thoughts');
+          },
         ),
-      ),
+        Center(
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            child: Text(thoughts, style: const TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 25,
+            ),),
+          )
+        )
+
+      ]),
     );
   }
 }
-
-
