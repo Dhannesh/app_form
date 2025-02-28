@@ -69,22 +69,18 @@ class _RadioInputWidgetState extends State<RadioInputWidget> {
             ),
 
           ),
-          ListTile(
+          RadioListTile(
             title: const Text("Small"),
-            leading: Radio<Size>(
-              value: Size.small,
-              groupValue: _size,
-              onChanged: (Size? value){
-                setState(() {
-                  _size = value!;
-                });
-              }
+            value: Size.small,
+            groupValue: _size,
+            onChanged: (Size? value){
+              setState(() {
+                _size = value!;
+              });
+            },
           ),
-          trailing: const Text("6 UK"),
-          ),
-          ListTile(
+          RadioListTile(
             title: const Text("Medium"),
-            leading: Radio<Size>(
                 value: Size.medium,
                 groupValue: _size,
                 onChanged: (Size? value){
@@ -92,12 +88,9 @@ class _RadioInputWidgetState extends State<RadioInputWidget> {
                     _size = value!;
                   });
                 }
-            ),
-            trailing: const Text("8 UK"),
           ),
-          ListTile(
+          RadioListTile(
             title: const Text("Large"),
-            leading: Radio<Size>(
                 value: Size.large,
                 groupValue: _size,
                 onChanged: (Size? value){
@@ -105,8 +98,6 @@ class _RadioInputWidgetState extends State<RadioInputWidget> {
                     _size = value!;
                   });
                 }
-          ),
-            trailing: const Text("10 UK"),
           )
         ],
       ),
