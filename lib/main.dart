@@ -33,6 +33,23 @@ class TextInputWidget extends StatefulWidget {
 
 class _TextInputWidgetState extends State<TextInputWidget> {
   String thoughts = "No thoughts yet...";
+  final _textController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _textController.addListener(() {
+      final String text = _textController.text.toUpperCase();
+      _textController.value = _textController.value.copyWith(
+        text: text,
+        selection: TextSelection(baseOffset: text.length, extentOffset: text.length)
+      );
+      setState(() {
+        thoughts = text;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,15 +63,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
               hintText: "What's on your mind?"),
           keyboardType: TextInputType.text,
           maxLength: 25,
-          onSubmitted: (text){
-            setState(() {
-              thoughts = text;
-            });
-            debugPrint('You submitted your thoughts: $thoughts');
-          },
-          onChanged: (text){
-            debugPrint('Your thoughts: $text');
-          },
+          controller: _textController,
         ),
         Center(
           child: Container(
