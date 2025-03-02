@@ -1,3 +1,4 @@
+import 'package:app_form/GroupedInputStore.dart';
 import 'package:app_form/RadioStore.dart';
 import 'package:app_form/SwitchStore.dart';
 import 'package:app_form/TextFieldStore.dart';
@@ -11,6 +12,7 @@ void main() {
   // runApp(const Radiostore());
   // runApp(const CheckBoxStore());
   // runApp(const SwitchStore());
-  runApp(const DropdownStore());
+  // runApp(const DropdownStore());
+  runApp(const GroupedInputStore());
 }
 
