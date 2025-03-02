@@ -31,6 +31,18 @@ class CustomProfileForm extends StatefulWidget {
 
 class _CustomProfileFormState extends State<CustomProfileForm> {
   final _customerProfileFormKey = GlobalKey<FormState>();
+  bool match = false;
+  String password = "";
+  String confirmPassword = "";
+  String userName = "";
+
+  void checkPassword() {
+    setState(() {
+      match = password.isNotEmpty &&
+          confirmPassword.isNotEmpty &&
+          password == confirmPassword;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,27 +52,61 @@ class _CustomProfileFormState extends State<CustomProfileForm> {
           padding: EdgeInsets.all(18.0),
           child: Form(
             key: _customerProfileFormKey,
-            child: TextFormField(
-              decoration: InputDecoration(
-                border:OutlineInputBorder(),
-                labelText: "Name",
-                hintText: "Enter your name"
-              ),
-              keyboardType: TextInputType.text,
-              maxLength: 50,
-              onSaved: (value){
-                setState(() {
-                  debugPrint("Customer name : $value");
-                });
-              },
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                      labelText: "Name", hintText: "Enter your name"),
+                  keyboardType: TextInputType.text,
+                  onSaved: (value) {
+                    userName = value!;
+                    debugPrint("User name: $userName");
+                  },
+                ),
+                TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      labelText: "Password", hintText: "Enter your password"),
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                  onSaved: (value) {
+                    password = value!;
+                    debugPrint("Password: $password");
+                  },
+                ),
+                TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      labelText: "Confirm Password",
+                      hintText: "Enter confirm password"),
+                  keyboardType: TextInputType.text,
+                  onChanged: (value){
+                    setState(() {
+                      confirmPassword = value;
+                      checkPassword();
+                    });
+                  },
+                  onSaved: (value) {
+                    debugPrint("Confirm Password: $confirmPassword");
+                    debugPrint("password matched: $match");
+                  },
+                ),
+              ],
             ),
           ),
         ),
-        ElevatedButton(onPressed: (){
-          _customerProfileFormKey.currentState?.save();
-        }, child: const Text("Submit"))
+        ElevatedButton(
+            onPressed: match
+                ? () {
+                    _customerProfileFormKey.currentState?.save();
+                  }
+                : null,
+            child: const Text("Submit"))
       ],
     );
   }
 }
-
