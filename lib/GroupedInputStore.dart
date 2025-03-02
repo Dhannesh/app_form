@@ -59,6 +59,7 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
           ),
           TextField(
               decoration: const InputDecoration(labelText: "Password"),
+              obscureText: true,
               keyboardType: TextInputType.text,
               onChanged: (String password) {
                 setState(() {
@@ -68,6 +69,7 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
               }),
           TextField(
               decoration: const InputDecoration(labelText: "Confirm password"),
+              obscureText: true,
               keyboardType: TextInputType.text,
               onChanged: (String password) {
                 setState(() {
