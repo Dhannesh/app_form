@@ -31,7 +31,7 @@ class PasswordInputWidget extends StatefulWidget {
 
 class _PasswordInputWidgetState extends State<PasswordInputWidget> {
   bool match = false;
-  String userName="";
+  String userName = "";
   String password = "";
   String confirmPassword = "";
   void checkPassword() {
@@ -51,7 +51,7 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
           TextField(
             decoration: const InputDecoration(labelText: "Username"),
             keyboardType: TextInputType.text,
-            onChanged: (String userName){
+            onChanged: (String userName) {
               setState(() {
                 this.userName = userName;
               });
@@ -78,13 +78,39 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
                 checkPassword();
               }),
           Padding(
-              padding: EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(12.0),
             child: Text(
-              match? '$userName, Password match!' : '$userName, Password does not match :-( please try again',style: TextStyle(
-              color: match ? Colors.blueGrey : Colors.red
+              match
+                  ? '$userName, Password match!'
+                  : '$userName, Password does not match :-( please try again',
+              style: TextStyle(color: match ? Colors.blueGrey : Colors.red),
             ),
-            ),
-
+          ),
+          ElevatedButton(
+            onPressed: match
+                ? () {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                              title: const Text("Successful!"),
+                              content: const Text(
+                                  "You can now move on to bigger and better things:-)"),
+                              actions: <Widget>[
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(ctx).pop();
+                                    },
+                                    child: Center(
+                                        child: Container(
+                                      color: Colors.green,
+                                      padding: EdgeInsets.all(14.0),
+                                      child: const Text("Okay"),
+                                    )))
+                              ],
+                            ));
+                  }
+                : null,
+            child: const Text('Submit'),
           )
         ],
       ),
