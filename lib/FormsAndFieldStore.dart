@@ -35,6 +35,7 @@ class _CustomProfileFormState extends State<CustomProfileForm> {
   String password = "";
   String confirmPassword = "";
   String userName = "";
+  String email = "";
 
   void checkPassword() {
     setState(() {
@@ -58,9 +59,29 @@ class _CustomProfileFormState extends State<CustomProfileForm> {
                   decoration: InputDecoration(
                       labelText: "Name", hintText: "Enter your name"),
                   keyboardType: TextInputType.text,
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Please enter your name";
+                    }
+                    return null;
+                  },
                   onSaved: (value) {
                     userName = value!;
-                    debugPrint("User name: $userName");
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                      labelText: "Email", hintText: "Enter your email"),
+                  keyboardType: TextInputType.text,
+                  validator: (String? value) {
+                    var regex = RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
+                    if (!regex.hasMatch(value!)) {
+                      return "Please specify a valid email";
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    email = value!;
                   },
                 ),
                 TextFormField(
@@ -68,11 +89,16 @@ class _CustomProfileFormState extends State<CustomProfileForm> {
                   decoration: InputDecoration(
                       labelText: "Password", hintText: "Enter your password"),
                   keyboardType: TextInputType.text,
-                  onChanged: (value) {
-                    setState(() {
-                      password = value;
-                    });
-                  },
+                 validator: (value){
+                    if(value!.isEmpty){
+                      return "Please enter your password";
+                    }
+                    else if(value.length < 6){
+                      return "Password must be at least 6 characters";
+                    }
+                    password = value;
+                    return null;
+                 },
                   onSaved: (value) {
                     password = value!;
                     debugPrint("Password: $password");
@@ -84,11 +110,13 @@ class _CustomProfileFormState extends State<CustomProfileForm> {
                       labelText: "Confirm Password",
                       hintText: "Enter confirm password"),
                   keyboardType: TextInputType.text,
-                  onChanged: (value){
-                    setState(() {
-                      confirmPassword = value;
-                      checkPassword();
-                    });
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return "Please enter confirm password";
+                    }else if(value != password){
+                      return "Password does not match";
+                    }
+                    return null;
                   },
                   onSaved: (value) {
                     debugPrint("Confirm Password: $confirmPassword");
@@ -100,11 +128,21 @@ class _CustomProfileFormState extends State<CustomProfileForm> {
           ),
         ),
         ElevatedButton(
-            onPressed: match
-                ? () {
-                    _customerProfileFormKey.currentState?.save();
-                  }
-                : null,
+            // onPressed: match
+            //     ? () {
+            //         _customerProfileFormKey.currentState?.save();
+            //       }
+            //     : null,
+          onPressed: (){
+            if(_customerProfileFormKey.currentState!.validate()){
+              _customerProfileFormKey.currentState?.save();
+              debugPrint("Form is successfully submitted");
+              debugPrint("Name: $userName");
+              debugPrint("Email: $email");
+              debugPrint("Password: $password");
+              // debugPrint("Confirm Password: $confirmPassword");
+            }
+          },
             child: const Text("Submit"))
       ],
     );
